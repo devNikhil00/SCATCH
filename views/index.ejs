@@ -1,46 +1,90 @@
 <%- include('./partials/header') %>
 
-    <% if(error.length>0){ %>
-        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
-            <span class="inline-block mt-1 mb-1 text-white">
-                <%= error %>
-            </span>
-        </div>
-        <% } %>
-            <div class="w-full h-screen flex px-20">
-                <div class="w-1/2 flex items-center justify-center h-screen">
-                    <div class="w-full px-32">
-                        <h3 class="text-4xl">welcome to <span class="text-blue-400 font-semibold">Scatch</span></h3>
-                        <h4 class="text-2xl mb-5">create your account</h4>
-                        <form autocomplete="off" action="/users/register" method="post">
-                            <input
-                                class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                                type="text" placeholder="Full Name" name="fullname">
-                            <input
-                                class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                                type="email" placeholder="Email" name="email">
-                            <input
-                                class="bg-zinc-100 block w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                                type="password" placeholder="Password" name="password">
-                            <input class="px-5 rounded-full py-3 mt-2 bg-blue-500 text-white" type="submit"
-                                value="Create My Account">
-                        </form>
-                    </div>
-                </div>
-                <div class="w-1/2 flex items-center justify-center h-screen">
-                    <div class="w-full px-32">
-                        <h4 class="text-2xl capitalize mb-5">login your account</h4>
-                        <form autocomplete="off" action="/users/login" method="post">
-                            <input
-                                class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                                type="email" placeholder="Email" name="email">
-                            <input
-                                class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
-                                type="password" placeholder="Password" name="password">
-                            <input class="px-5 block rounded-full py-3 mt-2 bg-blue-500 text-white" type="submit"
-                                value="Login">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <%- include('./partials/footer') %>
+<% if (error && error.length > 0) { %>
+  <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-2 rounded bg-red-600 text-white font-medium shadow-md">
+    <%= error %>
+  </div>
+<% } %>
+
+<!-- PAGE WRAPPER -->
+<div class="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-lg w-full space-y-8">
+    
+    <!-- BRAND HEADER -->
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-gray-900">
+        Welcome to <span class="text-pink-600">Scatch</span>
+      </h1>
+      <p class="mt-2 text-sm text-gray-600">
+        Premium bags crafted for a modern lifestyle.
+      </p>
+    </div>
+
+    <!-- AUTH CARD (LOGIN / REGISTER) -->
+    <div id="auth-card" class="bg-white shadow-2xl rounded-2xl overflow-hidden transition-all duration-500">
+      
+      <!-- LOGIN SECTION -->
+      <div id="login-section" class="p-8 space-y-6">
+        <h2 class="text-2xl font-bold text-gray-900 text-center">Sign In</h2>
+        <form autocomplete="off" action="/users/login" method="post" class="space-y-5">
+          <input name="email" type="email" required placeholder="Email"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:outline-none" />
+          <input name="password" type="password" required placeholder="Password"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:outline-none" />
+          <button type="submit"
+                  class="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-lg transition">
+            Login
+          </button>
+        </form>
+        <p class="text-sm text-center text-gray-600">
+          New here?
+          <button id="show-register" class="text-pink-600 hover:underline font-medium">Create an account</button>
+        </p>
+      </div>
+
+      <!-- REGISTER SECTION (Initially hidden) -->
+      <div id="register-section" class="p-8 space-y-6 hidden">
+        <h2 class="text-2xl font-bold text-gray-900 text-center">Create Account</h2>
+        <form autocomplete="off" action="/users/register" method="post" class="space-y-5">
+          <input name="fullname" type="text" required placeholder="Full Name"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+          <input name="email" type="email" required placeholder="Email"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+          <input name="password" type="password" required placeholder="Password"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none" />
+          <button type="submit"
+                  class="w-full py-2 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg transition">
+            Create Account
+          </button>
+        </form>
+        <p class="text-sm text-center text-gray-600">
+          Already registered?
+          <button id="show-login" class="text-purple-600 hover:underline font-medium">Sign in here</button>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SIMPLE TOGGLER SCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loginSec    = document.getElementById('login-section');
+    const registerSec = document.getElementById('register-section');
+    const showLogin   = document.getElementById('show-login');
+    const showReg     = document.getElementById('show-register');
+
+    showReg.addEventListener('click', () => {
+      loginSec.classList.add('hidden');
+      registerSec.classList.remove('hidden');
+    });
+
+    showLogin.addEventListener('click', () => {
+      registerSec.classList.add('hidden');
+      loginSec.classList.remove('hidden');
+    });
+  });
+</script>
+
+<%- include('./partials/footer') %>

@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
 
     // Send token in a cookie
     res.cookie("token", token, { httpOnly: true });
-    return res.status(201).send("User registered successfully");
+    return res.status(201).redirect("/shop");
   } catch (error) {
     console.error(error);
     return res.status(500).send("Server error");
